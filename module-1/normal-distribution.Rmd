@@ -1,0 +1,20 @@
+---
+title: Module 1
+subtitle: The Exponential Family
+output: html_document
+---
+
+## The Normal Distribution
+
+Given a set of random variables $X_1,..., X_n$ iid according to some unknown distribution, but with known mean $\mu$ and variance $\sigma^2$, the central limit theorem asserts that $X = \frac{\Sigma_{i=1}^n (X_i - \mu)}{\sqrt(n)}$ is approximately normally distributed (with mean 0 and variance $\sigma^2$) for large $n$.
+
+The pdf of $X \sim N(\mu, \sigma^2)$ is $f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}} exp\left(-\frac{(x-\mu)^2}{2\sigma^2} \right)$. This can be written $exp(\frac{x\mu - \frac{1}{2}\mu^2}{\sigma^2} - \frac{x^2}{2\sigma^2} - \frac{1}{2}log(2\pi \sigma^2))$. Then calling $\theta = \mu$ the parameter of interest; $\phi = \sigma^2$ the nuisance parameter; $\omega = 1$ the weight; $b(\theta) = \frac{1}{2}\mu^2$ and $c(x,\phi,\omega) = - \frac{x^2}{2\sigma^2} - \frac{1}{2}log(2\pi \sigma^2)$, we see that the normal distribution is a member of the exponential family. And indeed the expectation and variance are given by their advertised expressions: $b'(\theta) = \theta = \mu = E(X)$ and $b''(\theta)\frac{\phi}{\omega} = \phi = \sigma^2 = Var(X)$.
+
+Beneath is a plot of $y = f_X(x)$ for $X \sim N(0,1)$ with a red vertical line at $x = E(X) = 0$.
+```{r message=FALSE}
+library(tidyverse)
+
+ggplot(data.frame(x=seq(-3,3,0.1)), aes(x)) +
+  stat_function(fun=dnorm) +
+  geom_vline(xintercept=0, color="red")
+```
